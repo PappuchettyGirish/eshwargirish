@@ -1,0 +1,191 @@
+{% extends "myapp/header.html" %}
+
+
+{% block content %}
+<style>
+form#signup
+{
+display:none;
+}
+form#forgotpwd
+{
+    display:none;
+}
+ul#logs{
+list-style-type:none;
+background:none;
+}
+ul#logs li{
+display:block;
+float:left;
+padding:10px;
+}
+.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 7px 22px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+.button2 {
+  background-color: #ff0055;
+  color: white;
+  border-radius:25px;
+  border:none;
+
+}
+.button1 {
+  background-color: #f05;
+  color: white;
+  border-radius:25px;
+  border:none;
+
+}
+.button2:hover {
+  background-color: white;
+  color: #f05;
+  font-size:16px;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+#butlogin
+{
+    background:#ff0055;
+    border:none;
+    padding:3px 10px;
+    cursor:pointer;
+}
+#butsignup
+{
+    background:#4853e6;
+    border:none;
+    padding:3px 10px;
+    cursor:pointer;
+
+}
+
+
+
+</style>
+<script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</script>
+<div class="hero-text">
+<h1 style="font-size:50px;font-family: 'Akronim', cursive;"><span style="color:#ff0055;">Hello </span>World</h1>
+<div class="container">
+<div class="row" style="">
+    <div class="col-md-1">
+
+    </div>
+    <div class="col-md-10" style="padding:25px;box-shadow: 7px 8px 20px 8px #00000080;">
+<ul id="logs">
+<li><button id ="butlogin" onclick="loginbut()">LOGIN</button><li>
+		<li><button id ="butsignup" onclick="signupbut()">SIGNUP</button><li>
+</ul>
+<script>
+function myFunction()
+{
+  document.getElementById("profupd").style.display="none";
+}
+
+function signupbut()
+{
+	document.getElementById("login").style.display="none";
+	document.getElementById("signup").style.display="block";
+	document.getElementById("butsignup").style.background="#f05";
+	document.getElementById("butlogin").style.background="#4853e6";
+}
+function loginbut()
+{
+	document.getElementById("login").style.display="block";
+	document.getElementById("signup").style.display="none";
+	document.getElementById("butsignup").style.background="#4853e6";
+	document.getElementById("butlogin").style.background="#f05";
+}
+$(function() {
+    // setTimeout() function will be fired after page is loaded
+    // it will wait for 5 sec. and then will fire
+    // $("#successMessage").hide() function
+    setTimeout(function() {
+        $("#myEdlem").hide()
+    }, 5000);
+});
+
+function forgotpassword()
+{
+  document.getElementById("login").style.display="none";
+  document.getElementById("signup").style.display="none";
+  document.getElementById("butlogin").style.display="none";
+  document.getElementById("butsignup").style.display="none";
+  document.getElementById("forgotpass").style.display="none";
+  document.getElementById("forgotpwd").style.display="block";
+
+}
+
+</script>
+<form method="POST" id="login" action="/myapp/login/">
+{% csrf_token %}
+
+<input type="text" name="username" placeholder="Username" required pattern="[A-Za-z0-9_]+" title="No Special characters"/></br>
+
+<input style="margin-left:3px;" name="password" type="password" placeholder="Password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" /></br>
+<input class=" button button1" name="log" type="submit" value="LOGIN"/>
+</form>
+<form method="POST" id="signup" action="/myapp/signup/">
+{% csrf_token %}
+
+<input type="text" name="username" placeholder="Username" required pattern="[A-Za-z0-9_]+" title="No Special characters"/></br>
+<input type="text" name="emailid" placeholder="Email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Valid email address"/></br>
+<input style="margin-left:3px;" name="password" type="password" placeholder="Password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" /></br>
+
+<input class=" button button1" name="log" type="submit" value="SIGNUP"/>
+</form>
+
+<form method="POST" id="forgotpwd" action="/myapp/forgotpwd/">
+{% csrf_token %}
+<p>Password will be send to email id</p>
+
+<input type="text" name="username" placeholder="Username" required pattern="[A-Za-z0-9_]+" title="No Special characters"/></br>
+<input type="text" name="emailid" placeholder="Email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Valid email address"/></br>
+
+
+<input class=" button button1" name="log" type="submit" value="GET PASSWORD"/>
+</form>
+
+<!--<form method="POST" action="/myapp/mail/">
+    {% csrf_token %}
+    <input class="button button1" name="mail" type="submit" value="MAIL" />
+
+</form>-->
+<a href="#" id="forgotpass" onclick="forgotpassword()" style="text-align:left;margin-left:-20%;">Forgot Password ?</a>
+</div>
+<div class="col-md-1">
+
+</div>
+
+</div>
+<h3 id="myEdlem" style="margin-top:30px;">{{txt1}}</h3>
+{%ifequal "Your Signup is success" txt1 %}
+<meta http-equiv = "refresh" content = "2; url = /myapp/" />
+{%endifequal%}
+{%ifequal "OTP is not matched" txt1 %}
+<meta http-equiv = "refresh" content = "2; url = /myapp/" />
+{%endifequal%}
+<h3 id="myEdlem" style="margin-top:30px;">{{msg1}}</h3>
+{%ifequal "SENT" msg1 %}
+<meta http-equiv = "refresh" content = "2; url = /myapp/" />
+{%endifequal%}
+{%ifequal "Invalid username or emailid" msg1 %}
+<meta http-equiv = "refresh" content = "2; url = /myapp/" />
+{%endifequal%}
+</div>
+
+
+</div>
+{% endblock %}
