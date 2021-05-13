@@ -1,6 +1,7 @@
 #!/usr/bin/env python3.6
 import os
 import sys
+#girish
 
 if __name__ == '__main__':
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'myproject.settings')
